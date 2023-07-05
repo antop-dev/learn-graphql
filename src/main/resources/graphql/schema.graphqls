@@ -1,0 +1,8 @@
+type Region {
+    id: ID!
+    name: String!
+}
+
+type Query {
+    getRegions: [Region]
+}
