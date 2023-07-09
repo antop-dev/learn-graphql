@@ -5,4 +5,6 @@ type Region {
 
 type Query {
     getRegions: [Region]
+    getRegionsByName(name: String): [Region]
+    getRegionById(id: ID): Region
 }
