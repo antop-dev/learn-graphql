@@ -6,9 +6,24 @@ Kotlin + Spring Boot + GraphQL 조합으로 [Oracle Human Resources](https://git
 * Spring Boot 3.1.1
 * [GraphQL](https://graphql.org/)
 * [Exposed 0.41.1](https://github.com/JetBrains/Exposed)
-* H2
+* [Mapstruct 1.5.5](https://mapstruct.org/)
+* H2 Database
 
-# Issue
+## Database
+
+![ERD](https://i.imgur.com/ggZ3ViY.png)
+
+## Run
+
+```
+./gradlew bootRun
+```
+
+http://localhost:8080/graphiql
+
+![graphiql](https://i.imgur.com/3dWPbTE.png)
+
+## Issue
 
 ### `ExposedAutoConfiguration`가 동작하지 않음
 

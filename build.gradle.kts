@@ -4,6 +4,7 @@ plugins {
     id("org.springframework.boot") version "3.1.1"
     id("io.spring.dependency-management") version "1.1.0"
     kotlin("jvm") version "1.8.22"
+    kotlin("kapt") version "1.8.22"
     kotlin("plugin.spring") version "1.8.22"
 }
 
@@ -33,11 +34,16 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.h2database:h2")
-
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
+    compileOnly("org.mapstruct:mapstruct:1.5.5.Final")
+    kapt("org.mapstruct:mapstruct-processor:1.5.5.Final")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework:spring-webflux")
     testImplementation("org.springframework.graphql:spring-graphql-test")
+    testAnnotationProcessor("org.mapstruct:mapstruct-processor:1.5.5.Final")
+
 }
 
 tasks.withType<KotlinCompile> {
@@ -49,4 +55,13 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+kapt {
+    arguments {
+        // Set Mapstruct Configuration options here
+        // https://kotlinlang.org/docs/reference/kapt.html#annotation-processor-arguments
+        // https://mapstruct.org/documentation/stable/reference/html/#configuration-options
+        arg("mapstruct.defaultComponentModel", "spring")
+    }
 }

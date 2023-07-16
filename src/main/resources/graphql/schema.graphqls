@@ -3,8 +3,18 @@ type Region {
     name: String!
 }
 
+type Country {
+    id: ID!
+    name: String!
+    region: Region!
+}
+
 type Query {
+    getRegionById(id: ID): Region
     getRegions: [Region]
     getRegionsByName(name: String): [Region]
-    getRegionById(id: ID): Region
+
+    getCountryById(id: ID): Country
+    getCountries: [Country]
+    getCountriesByName(name: String): [Country]
 }
