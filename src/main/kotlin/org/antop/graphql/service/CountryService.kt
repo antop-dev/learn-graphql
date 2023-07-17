@@ -1,9 +1,9 @@
 package org.antop.graphql.service
 
+import org.antop.graphql.fullLike
 import org.antop.graphql.mapper.CountryMapper
 import org.antop.graphql.model.Countries
 import org.antop.graphql.model.Country
-import org.jetbrains.exposed.sql.lowerCase
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -16,7 +16,7 @@ class CountryService(val countryMapper: CountryMapper) {
     fun getCountries() = Country.all().map { countryMapper.convert(it) }
 
     fun getCountries(name: String) = Country.find {
-        Countries.name.lowerCase() like "%" + name.lowercase() + "%"
+        Countries.name fullLike name
     }.map {
         countryMapper.convert(it)
     }

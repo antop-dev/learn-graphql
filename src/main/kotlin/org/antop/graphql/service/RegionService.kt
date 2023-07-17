@@ -1,9 +1,9 @@
 package org.antop.graphql.service
 
+import org.antop.graphql.fullLike
 import org.antop.graphql.mapper.RegionMapper
 import org.antop.graphql.model.Region
 import org.antop.graphql.model.Regions
-import org.jetbrains.exposed.sql.lowerCase
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -17,7 +17,7 @@ class RegionService(
     fun getRegions() = Region.all().map { regionMapper.convert(it) }
 
     fun getRegions(name: String) = Region.find {
-        Regions.name.lowerCase() like "%" + name.lowercase() + "%"
+        Regions.name fullLike name
     }.map {
         regionMapper.convert(it)
     }

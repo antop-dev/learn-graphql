@@ -9,6 +9,15 @@ type Country {
     region: Region!
 }
 
+type Location {
+    id: ID!
+    streetAddress: String
+    postalCode: String
+    city: String!
+    stateProvince: String
+    country: Country!
+}
+
 type Query {
     getRegionById(id: ID): Region
     getRegions: [Region]
@@ -17,4 +26,8 @@ type Query {
     getCountryById(id: ID): Country
     getCountries: [Country]
     getCountriesByName(name: String): [Country]
+
+    getLocationById(id: ID): Location
+    getLocations: [Location]
+    getLocationsBy(streetAddress: String, postalCode: String, city: String, stateProvince: String): [Location]
 }
