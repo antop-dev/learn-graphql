@@ -1,5 +1,6 @@
 package org.antop.graphql.service
 
+import org.antop.graphql.dto.LocationDto
 import org.antop.graphql.fullLike
 import org.antop.graphql.mapper.LocationMapper
 import org.antop.graphql.model.Location
@@ -11,11 +12,11 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional(readOnly = true)
-class LocationService(val locationMapper: LocationMapper) {
+class LocationService(private val locationMapper: LocationMapper) {
 
-    fun getLocation(id: Int) = Location.findById(id)?.let { locationMapper.convert(it) }
+    fun getLocation(id: Int) = Location.findById(id)?.let { toDto(it) }
 
-    fun getLocations() = Location.all().map { locationMapper.convert(it) }
+    fun getLocations() = Location.all().map { toDto(it) }
 
     fun getLocations(
         streetAddress: String?,
@@ -27,6 +28,10 @@ class LocationService(val locationMapper: LocationMapper) {
         postalCode?.let { andWhere { Locations.postalCode fullLike it } }
         city?.let { andWhere { Locations.city fullLike it } }
         stateProvince?.let { andWhere { Locations.stateProvince fullLike it } }
-    }.map { locationMapper.convert(Location.wrapRow(it)) }
+    }.map {
+        toDto(Location.wrapRow(it))
+    }
+
+    private fun toDto(location: Location): LocationDto = locationMapper.convert(location)
 
 }

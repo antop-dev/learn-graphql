@@ -18,16 +18,57 @@ type Location {
     country: Country!
 }
 
+type Job {
+    id: ID!
+    title: String!
+    minSalary: String!
+    maxSalary: String!
+}
+
+type Department {
+    id: ID!,
+    name: String!,
+    location: Location!
+}
+
+type Employee {
+    id: ID!,
+    firstName: String,
+    lastName: String!,
+    email: String!,
+    phoneNumber: String,
+    hireDate: String!,
+    job: Job!,
+    salary: String!,
+    commissionPct: Float,
+    manager: Employee,
+    department: Department
+}
+
 type Query {
+    # 지역
     getRegionById(id: ID): Region
     getRegions: [Region]
-    getRegionsByName(name: String): [Region]
-
+    getRegionsByName(name: String!): [Region]
+    # 국가
     getCountryById(id: ID): Country
     getCountries: [Country]
-    getCountriesByName(name: String): [Country]
-
+    getCountriesByName(name: String!): [Country]
+    # 지역
     getLocationById(id: ID): Location
     getLocations: [Location]
     getLocationsBy(streetAddress: String, postalCode: String, city: String, stateProvince: String): [Location]
+    # 직업
+    getJobById(id: ID): Job
+    getJobs: [Job]
+    getJobsByTitle(title: String!): [Job]
+    # 부서
+    getDepartmentById(id: ID): Department
+    getDepartments: [Department]
+    getDepartmentsByName(name: String!): [Department]
+    # 사원
+    getEmployeeById(id: ID): Employee
+    getEmployees: [Employee]
+    # 부서의 매니저(사원) 조회
+    getManagerOfDepartment(departmentId: ID): Employee
 }

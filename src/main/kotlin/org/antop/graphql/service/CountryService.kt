@@ -9,15 +9,18 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional(readOnly = true)
-class CountryService(val countryMapper: CountryMapper) {
+class CountryService(private val countryMapper: CountryMapper) {
 
-    fun getCountry(id: String) = Country.findById(id)?.let { countryMapper.convert(it) }
+    fun getCountry(id: String) = Country.findById(id)?.let { toDto(it) }
 
-    fun getCountries() = Country.all().map { countryMapper.convert(it) }
+    fun getCountries() = Country.all().map { toDto(it) }
 
     fun getCountries(name: String) = Country.find {
         Countries.name fullLike name
     }.map {
-        countryMapper.convert(it)
+        toDto(it)
     }
+
+    private fun toDto(country: Country) = countryMapper.convert(country)
+
 }

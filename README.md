@@ -36,3 +36,34 @@ http://localhost:8080/graphiql
 @Import(ExposedAutoConfiguration::class)
 class LearnGraphqlApplication
 ```
+
+### Matstruct mapper 순환참조
+
+부서와 사원의 관계가 순환참조가 발생하는 데이터 구조다.
+
+사원ID가 `201`인 사원은 마케팅(`201`) 팀에 속해 잇으면서 매니저다.
+
+![](https://i.imgur.com/hyu3gnA.png)
+
+StackOverflow 정도를 예상 했지만 Mapstruct 구현체가 서로를 주입하게 되면서 순환참조 에러가 발생한다.
+
+```text
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The dependencies of some of the beans in the application context form a cycle:
+
+   departmentController defined in file [learn-graphql/build/classes/kotlin/main/org/antop/graphql/controller/DepartmentController.class]
+      ↓
+   departmentService defined in file [learn-graphql/build/classes/kotlin/main/org/antop/graphql/service/DepartmentService.class]
+┌─────┐
+|  departmentMapperImpl (field private org.antop.graphql.mapper.EmployeeMapper org.antop.graphql.mapper.DepartmentMapperImpl.employeeMapper)
+↑     ↓
+|  employeeMapperImpl (field private org.antop.graphql.mapper.DepartmentMapper org.antop.graphql.mapper.EmployeeMapperImpl.departmentMapper)
+└─────┘
+```
+
+해결방법(?)으로는 부서에서 매니저로 가는 참조를 제거하고, 부사의 매니저를 조회하는 API를 별도로 제공한다.
