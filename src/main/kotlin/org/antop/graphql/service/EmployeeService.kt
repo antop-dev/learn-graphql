@@ -17,6 +17,10 @@ class EmployeeService(private val employeeMapper: EmployeeMapper) {
 
     fun getEmployees() = Employee.all().map { toDto(it) }
 
+    fun getEmployees(offset: Long, limit: Int) = Employee.all()
+        .limit(limit, offset = offset)
+        .map { toDto(it) }
+
     fun getEmployeeByDepartment(departmentId: Long) =
         Employees.join(Departments, JoinType.INNER, onColumn = Employees.id, otherColumn = Departments.manager)
             .select { Departments.id eq departmentId }

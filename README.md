@@ -1,5 +1,12 @@
 # learn-graphql
 
+Document
+
+* https://graphql-kr.github.io/
+* https://graphql.org/learn/
+* https://www.graphql-java.com/documentation/getting-started/
+* https://docs.spring.io/spring-graphql/reference/
+
 Kotlin + Spring Boot + GraphQL 조합으로 [Oracle Human Resources](https://github.com/oracle-samples/db-sample-schemas) API 제공 개발 연습 프로젝트
 
 * Kotlin 1.8.22
@@ -9,10 +16,15 @@ Kotlin + Spring Boot + GraphQL 조합으로 [Oracle Human Resources](https://git
 * [Mapstruct 1.5.5](https://mapstruct.org/)
 * H2 Database
 
+## Learn
+
+* Kotlin + Exposed 구성
+* Spring Boot + GraphQL 구성
+* 나름 [Connection Specification](https://graphql.org/learn/pagination/#complete-connection-model)에 맞게 개발은 해봤는데 잘 모르겠다.. ㅜ
+
 ## Database
 
 ![ERD](https://i.imgur.com/ggZ3ViY.png)
-
 ## Run
 
 ```
@@ -66,4 +78,4 @@ The dependencies of some of the beans in the application context form a cycle:
 └─────┘
 ```
 
-해결방법(?)으로는 부서에서 매니저로 가는 참조를 제거하고, 부사의 매니저를 조회하는 API를 별도로 제공한다.
+해결방법(?)으로는 부서에서 매니저로 가는 참조를 제거하고, 부서의 매니저를 조회하는 API를 별도로 제공한다.

@@ -45,6 +45,23 @@ type Employee {
     department: Department
 }
 
+type DepartmentConnection {
+    edges: [DepartmentEdge]!
+    pageInfo: PageInfo!
+}
+
+type DepartmentEdge {
+    node: Department!
+    cursor: String!
+}
+
+type PageInfo {
+    startCursor: String
+    endCursor: String
+    hasPreviousPage: Boolean!
+    hasNextPage: Boolean!
+}
+
 type Query {
     # 지역
     getRegionById(id: ID): Region
@@ -66,9 +83,11 @@ type Query {
     getDepartmentById(id: ID): Department
     getDepartments: [Department]
     getDepartmentsByName(name: String!): [Department]
+    departments(first: Int, after: String, before: String): DepartmentConnection
     # 사원
     getEmployeeById(id: ID): Employee
     getEmployees: [Employee]
+    employees(offset: Int, limit: Int): [Employee]
     # 부서의 매니저(사원) 조회
     getManagerOfDepartment(departmentId: ID): Employee
 }

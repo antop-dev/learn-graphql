@@ -1,5 +1,6 @@
 package org.antop.graphql.controller
 
+import org.antop.graphql.constants.PagingConstant
 import org.antop.graphql.service.DepartmentService
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.QueryMapping
@@ -15,4 +16,12 @@ class DepartmentController(private val departmentService: DepartmentService) {
 
     @QueryMapping
     fun getDepartmentsByName(@Argument name: String) = departmentService.getDepartments(name)
+
+    @QueryMapping
+    fun departments(
+        @Argument first: Int?,
+        @Argument before: String?,
+        @Argument after: String?
+    ) = departmentService.getDepartments(first ?: PagingConstant.DEFAULT_SIZE, after, before)
+
 }
